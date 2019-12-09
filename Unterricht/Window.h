@@ -10,9 +10,10 @@ class Window
 {
 public:
 
-	Window(const char* title, int width = 1280, int height = 720);
 	~Window();
 
+	void Initialize(const char* title, int width = 1280, int height = 720);
+	void Show(bool show);
 	bool PumpMessages();
 
 private:

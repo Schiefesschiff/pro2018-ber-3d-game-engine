@@ -25,11 +25,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
-Window::Window(const char* title, int width, int height)
+void Window::Initialize(const char* title, int width, int height)
 {
 	WNDCLASSEXA wc = { };
 	wc.cbSize = sizeof(wc);
-	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.hInstance = GetModuleHandle(NULL);
 	wc.lpszClassName = title;
 	wc.lpfnWndProc = WndProc;
@@ -38,17 +38,17 @@ Window::Window(const char* title, int width, int height)
 
 	if (FAILED(RegisterClassEx(&wc)))
 	{
-
+		MessageBoxA(NULL, "Failed to register class.", "Error!", MB_OK | MB_ICONEXCLAMATION);
+		return;
 	}
 
-	DWORD style = WS_OVERLAPPEDWINDOW;
-	this->windowHandle = CreateWindowEx(
-		0,
+	DWORD style = WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU;
+	this->windowHandle = CreateWindow(
 		wc.lpszClassName,
 		title,
-		style,
-		0,
-		0,
+		style | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		100,
+		100,
 		width,
 		height,
 		NULL,
@@ -59,31 +59,37 @@ Window::Window(const char* title, int width, int height)
 
 	if (!this->windowHandle)
 	{
-		printf("No window handle!");
+		MessageBoxA(NULL, "Failed to create window.", "Error!", MB_OK | MB_ICONEXCLAMATION);
 		return;
 	}
 
-	ShowWindow(this->windowHandle, SW_SHOW);
-	UpdateWindow(this->windowHandle);
+	this->Show(true);
 }
 
 Window::~Window()
 {
 	UnregisterClassA(this->className, GetModuleHandle(NULL));
+	DestroyWindow(this->windowHandle);
 }
 
 bool Window::PumpMessages()
 {
-	MSG msg;
+	MSG msg = { };
 
-	if (PeekMessageA(&msg, this->windowHandle, NULL, NULL, PM_REMOVE))
+	while (PeekMessageA(&msg, NULL, 0, 0, PM_REMOVE))
 	{
+		if (msg.message == WM_QUIT)
+			return false;
+
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
-		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return true;
+}
+
+void Window::Show(bool show)
+{
+	ShowWindow(this->windowHandle, show ? SW_SHOW : SW_HIDE);
+	UpdateWindow(this->windowHandle);
 }

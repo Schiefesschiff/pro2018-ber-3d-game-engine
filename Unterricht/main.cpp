@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "Types.h"
 #include "Application.h"
 
-int main(int argc, char** argv) {
-	Application app;
+u32 main(u32 argc, AnsiString* argv) {
+	Application& app = Application::GetInstance();
 
 	app.Initialize();
 	app.Run();
