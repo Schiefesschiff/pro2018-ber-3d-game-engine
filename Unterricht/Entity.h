@@ -17,22 +17,51 @@ public:
 
 	Entity();
 
+	/*!
+	 * @brief adds component to component list if it dosnt already exist
+	 */
 	void AddComponent(Component* component);
+
+	/*!
+	 * @brief sets this.perant to parent and disataches from old and ataches to new parents children
+	 */
 	bool AttachTo(Entity* parent);
+
+	/*!
+	 * @brief sets this.perant to null and disataches from old parents children
+	 */
 	void Detatch(void);
-	Entity* FindChildEntity(Entity* parent);
+
+	/*!
+	 * @brief sets this.perant to null and disataches from old parents children
+	 */
+	//Entity* FindChildEntity(Entity* parent);
+
+	/*!
+	 * @return chlidens list
+	 */
 	const std::list<Entity*>& GetChildren(void);
 
 	std::string name;
 
 protected:
+
+	/*!
+	 * @brief calls all creates in cildren and components
+	 */
 	void Create(void);
+
+	/*!
+	 * @brief calls all updates in cildren and components
+	 */
 	void Update(real deltaTime);
+
+	/*!
+	 * @brief calls all destroy in cildren and components
+	 */
 	void Destroy(void);
 
 private:
-
-	static u64 ActiveEntities;
 
 	u64 entityID = 0;
 	Entity* parent = nullptr;
