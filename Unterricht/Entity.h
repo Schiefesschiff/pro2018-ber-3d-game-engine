@@ -25,7 +25,7 @@ public:
 	/*!
 	 * @brief removes component to component list if it doesnt already exist
 	 */
-	void RemoveComponent(Component* component)
+	void RemoveComponent(Component* component);
 
 	/*!
 	 * @brief sets this.parent to parent and detaches from old and attaches to new parents children
@@ -52,14 +52,14 @@ public:
 protected:
 
 	/*!
-	 * @brief calls all creates in children and components
+	 * @brief calls all creates in components
 	 */
 	void Create(void);
 
 	/*!
 	 * @brief calls all updates in children and components
 	 */
-	void Update(real deltaTime);
+	void Update(float deltaTime);
 
 	/*!
 	 * @brief calls all destroy in children and components
