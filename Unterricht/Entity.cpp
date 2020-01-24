@@ -40,8 +40,6 @@ void Entity::Detatch(void)
 	this->parent = nullptr;
 }
 
-#ifdef NOT_IMPLIMENTED
-
 Entity* Entity::FindChildEntity(Entity* parent) {
 	for(auto& child : this->children) {
 		if(child != nullptr) {
@@ -54,13 +52,6 @@ Entity* Entity::FindChildEntity(Entity* parent) {
 	}
 
 	return nullptr;
-}
-
-#endif // NOT_IMPLIMENTED
-
-void Entity::Update(real deltaTime)
-{
-	printf("Update %s in %f\n", this->name.c_str(), deltaTime);
 }
 
 const std::list<Entity*>& Entity::GetChildren()
