@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3FB3608B-DECC-44C5-94FD-A382FD3219DA}</ProjectGuid>
     <RootNamespace>Unterricht</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,8 +126,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameInstance.h" />
     <ClInclude Include="Matrix4x4.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
