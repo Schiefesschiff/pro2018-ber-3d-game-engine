@@ -1,17 +1,23 @@
 #include "Entity.h"
+#include <algorithm>
 
 #include "Component.h"
 
 u64 Entity::ActiveEntities = 0;
 
-Entity::Entity() : entityID(++ActiveEntities)
+Entity::Entity(bool hasTransform/* = true*/) : entityID(++ActiveEntities)
 {
 
 }
 
-void Entity::AddComponent(BaseComponent* component)
+void Entity::AddComponent(Component* component)
 {
 	this->components.push_back(component);
+}
+
+void Entity::RemoveComponent(Component* component)
+{
+	this->components.remove_if(component);
 }
 
 bool Entity::AttachTo(Entity* parent)
@@ -19,7 +25,7 @@ bool Entity::AttachTo(Entity* parent)
 	if (!parent)
 		return false;
 
-	if (this->entityID != parent->entityID && !this->FindChildEntity(parent))
+	if (this->entityID != parent->entityID) //&& check if parent is a child of this entity
 	{
 		this->Detatch();
 		this->parent = parent;
@@ -51,7 +57,6 @@ Entity* Entity::FindChildEntity(Entity* parent) {
 		}
 	}
 
-	return nullptr;
 }
 
 const std::list<Entity*>& Entity::GetChildren()
@@ -82,4 +87,5 @@ void Entity::Destroy(void) {
 	for(auto& it : children)
 		it->Destroy();
 	this->children.clear();
+}
 }

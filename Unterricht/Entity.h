@@ -13,9 +13,11 @@ class Entity final
 {
 	friend class Scene;
 
+	static u64 ActiveEntities;
+
 public:
 
-	Entity(std::list<Component*> startComponents);
+	Entity(bool hasTransform = true);
 
 	/*!
 	 * @brief adds component to component list if it dosnt already exist
