@@ -1,28 +1,34 @@
 #pragma once
 
+//===== ===== Extern ===== =====
 #include <list>
+#include <string>
 
+//===== ===== Intern ===== =====
 #include "Types.h"
 
-class BaseComponent;
+class Component;
 
-class Entity
+class Entity final
 {
+	friend class Scene;
 
 public:
 
 	Entity();
 
-	void AddComponent(BaseComponent* component);
+	void AddComponent(Component* component);
 	bool AttachTo(Entity* parent);
 	void Detatch(void);
 	Entity* FindChildEntity(Entity* parent);
-	const std::list<Entity*>& GetChildren();
-
-	virtual void Update(real deltaTime);
+	const std::list<Entity*>& GetChildren(void);
 
 	std::string name;
 
+protected:
+	void Create(void);
+	void Update(real deltaTime);
+	void Destroy(void);
 
 private:
 
@@ -31,5 +37,5 @@ private:
 	u64 entityID = 0;
 	Entity* parent = nullptr;
 	std::list<Entity*> children;
-	std::list<BaseComponent*> components;
+	std::list<Component*> components;
 };
