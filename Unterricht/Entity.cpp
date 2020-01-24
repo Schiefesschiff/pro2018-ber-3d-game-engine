@@ -1,15 +1,21 @@
 #include "Entity.h"
+#include <algorithm>
 
 u64 Entity::ActiveEntities = 0;
 
-Entity::Entity() : entityID(++ActiveEntities)
+Entity::Entity(bool hasTransform/* = true*/) : entityID(++ActiveEntities)
 {
 
 }
 
-void Entity::AddComponent(BaseComponent* component)
+void Entity::AddComponent(Component* component)
 {
 	this->components.push_back(component);
+}
+
+void Entity::RemoveComponent(Component* component)
+{
+	this->components.remove_if(component);
 }
 
 bool Entity::AttachTo(Entity* parent)
@@ -17,7 +23,7 @@ bool Entity::AttachTo(Entity* parent)
 	if (!parent)
 		return false;
 
-	if (this->entityID != parent->entityID && !this->FindChildEntity(parent))
+	if (this->entityID != parent->entityID) //&& check if parent is a child of this entity
 	{
 		this->Detatch();
 		this->parent = parent;
@@ -38,21 +44,14 @@ void Entity::Detatch(void)
 	this->parent = nullptr;
 }
 
-Entity* Entity::FindChildEntity(Entity* parent)
+const std::list<Entity*>& Entity::GetChildren(void)
 {
-	for (auto& child : this->children)
-	{
-		if (child != nullptr)
-		{
-			if (parent->entityID == child->entityID)
-				return child;
+	return this->children;
+}
 
-			if (auto ret = child->FindChildEntity(parent))
-				return ret;
-		}
-	}
+void Entity::Create(void)
+{
 
-	return nullptr;
 }
 
 void Entity::Update(real deltaTime)
@@ -60,7 +59,7 @@ void Entity::Update(real deltaTime)
 	printf("Update %s in %f\n", this->name.c_str(), deltaTime);
 }
 
-const std::list<Entity*>& Entity::GetChildren()
+void Entity::Destroy(void)
 {
-	return this->children;
+	
 }

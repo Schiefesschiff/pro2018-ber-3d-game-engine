@@ -13,9 +13,11 @@ class Entity final
 {
 	friend class Scene;
 
+	static u64 ActiveEntities;
+
 public:
 
-	Entity(std::list<Component*> startComponents);
+	Entity(bool hasTransform = true);
 
 	/*!
 	 * @brief adds component to component list if it dosnt already exist
@@ -25,7 +27,7 @@ public:
 	/*!
 	 * @brief removes component to component list if it dosnt already exist
 	 */
-	void RemoveComponent(Component* component)
+	void RemoveComponent(Component* component);
 
 	/*!
 	 * @brief sets this.perant to parent and disataches from old and ataches to new parents children
