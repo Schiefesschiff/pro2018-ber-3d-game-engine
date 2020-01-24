@@ -13,11 +13,20 @@ class GameInstance final {
 	GE_DECLARE_SINGLETON(GameInstance);
 
 public:
-	void ChangeScene(int newScene);
 	/*!
-	 * @brief
+	 * @brief unload old scene, change currentScene to newScene, load new scene
 	 */
-	void AddVirtualEntity(Entity* newVirtualEntity);
+	void ChangeScene(int newScene);
+
+	/*!
+	 * @brief adds the virtualEntity to the virtualEntities array
+	 */
+	void Add(Entity* virtualEntity);
+
+	/*!
+	 * @brief removes the virtualEntity to the virtualEntities array
+	 */
+	void Remove(Entity* virtualEntity);
 
 	/*!
 	 * @brief			updates the current scene and all virtual Entities

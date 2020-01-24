@@ -118,8 +118,10 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameInstance.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix4x4.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
