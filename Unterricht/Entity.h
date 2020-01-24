@@ -15,12 +15,17 @@ class Entity final
 
 public:
 
-	Entity();
+	Entity(std::list<Component*> startComponents);
 
 	/*!
 	 * @brief adds component to component list if it dosnt already exist
 	 */
 	void AddComponent(Component* component);
+
+	/*!
+	 * @brief removes component to component list if it dosnt already exist
+	 */
+	void RemoveComponent(Component* component)
 
 	/*!
 	 * @brief sets this.perant to parent and disataches from old and ataches to new parents children
