@@ -11,7 +11,7 @@ Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 {
 	isVirtual = nullptr == parent;
 	if(isVirtual) {
-		AddComponent(*(Component*)(new Transform));
+		AddComponent(*(new Transform));
 		AttachTo(parent);
 	} else {
 		GameInstance::GetInstance().Add(this);
@@ -20,6 +20,9 @@ Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 
 void Entity::AddComponent(Component& component)
 {
+	if(isVirtual && false/* component is of type Transform*/)
+		return;
+
 	this->components.push_back(&component);
 	component.OnCreate();
 }
@@ -33,7 +36,7 @@ void Entity::RemoveComponent(Component& component)
 
 bool Entity::AttachTo(Entity* parent)
 {
-	if (!parent)
+	if (!parent || isVirtual)
 		return false;
 
 	if(this->entityID != parent->entityID) //&& check if parent is a child of this entity

@@ -15,7 +15,7 @@ public:
 
 protected:
 
-	Entity* GetDad(void);
+	Entity* GetDad(void) { return dad; };
 
 private:
 	Entity* dad;
