@@ -74,4 +74,5 @@ private:
 	Entity* parent = nullptr;
 	std::list<Entity*> children;
 	std::list<Component*> components;
+	bool isVirtual;
 };

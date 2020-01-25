@@ -2,12 +2,16 @@
 #include <algorithm>
 
 #include "Component.h"
+#include "Transform.h"
 
 u64 Entity::ActiveEntities = 0;
 
 Entity::Entity(bool hasTransform/* = true*/) : entityID(++ActiveEntities)
 {
-
+	isVirtual = !hasTransform;
+	if(hasTransform) {
+		components.push_back((Component*)new Transform);
+	}
 }
 
 void Entity::AddComponent(Component* component)
@@ -87,5 +91,4 @@ void Entity::Destroy(void) {
 	for(auto& it : children)
 		it->Destroy();
 	this->children.clear();
-}
 }
