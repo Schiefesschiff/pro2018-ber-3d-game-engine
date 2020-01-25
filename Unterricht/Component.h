@@ -7,6 +7,7 @@ class Entity;
 
 class Component {
 	friend Entity;
+	friend Transform;
 
 public:
 	virtual void OnCreate(void) {};
@@ -19,4 +20,5 @@ protected:
 
 private:
 	Entity* dad;
+	virtual bool isTransform() { return false; };
 };

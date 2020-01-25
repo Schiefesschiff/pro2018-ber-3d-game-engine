@@ -20,7 +20,7 @@ Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 
 void Entity::AddComponent(Component& component)
 {
-	if(isVirtual && false/* component is of type Transform*/)
+	if(isVirtual && !component.isTransform())
 		return;
 
 	this->components.push_back(&component);
