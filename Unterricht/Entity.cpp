@@ -10,28 +10,15 @@ u64 Entity::ActiveEntities = 0;
 Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 {
 	isVirtual = nullptr == parent;
+
+	components.resize(MAX_COMPONENTS);
+
 	if(isVirtual) {
-		AddComponent(*(new Transform));
+		AddComponent<Transform>();
 		AttachTo(parent);
 	} else {
 		GameInstance::GetInstance().Add(this);
 	}
-}
-
-void Entity::AddComponent(Component& component)
-{
-	if(isVirtual && !component.isTransform())
-		return;
-
-	this->components.push_back(&component);
-	component.OnCreate();
-}
-
-void Entity::RemoveComponent(Component& component)
-{
-
-	component.OnDestroy();
-	this->components.remove_if(&component);
 }
 
 bool Entity::AttachTo(Entity* parent)
@@ -101,13 +88,4 @@ void Entity::Destroy(void) {
 	for(auto& it : children)
 		it->Destroy();
 	this->children.clear();
-}
-
-bool inline Entity::HasComponents(Component& comToCheck) {
-	for(auto& it : this->components) {
-		if(it == &comToCheck)
-			return true;
-	}
-
-	return false;
 }

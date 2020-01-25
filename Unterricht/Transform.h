@@ -6,6 +6,6 @@
 
 class Transform : public Component {
 
-private:
-	bool isTransform() override final { return true; };
+public:
+	static const int TypeID = 0;
 };

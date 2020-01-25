@@ -3,16 +3,20 @@
 //===== ===== Extern ===== =====
 //===== ===== Intern ===== =====
 
+#define MAX_COMPONENTS 16
+
 class Entity;
+
 
 class Component {
 	friend Entity;
-	friend Transform;
 
 public:
 	virtual void OnCreate(void) {};
 	virtual void OnUpdate(float deltaTime) {};
 	virtual void OnDestroy(void) {};
+
+	static const int TypeID = -1;
 
 protected:
 
@@ -20,5 +24,4 @@ protected:
 
 private:
 	Entity* dad;
-	virtual bool isTransform() { return false; };
 };

@@ -22,12 +22,26 @@ public:
 	/*!
 	 * @brief adds component to component list if it dosnt already exist
 	 */
-	void AddComponent(Component& component);
+	template<typename T>
+	void AddComponent(void) {
+		if(isVirtual && T::TypeID <= 0)//0 is Transform
+			return;
+
+		components[T::TypeID] = new T;
+		components[T::TypeID].OnCreate();
+	}
 
 	/*!
 	 * @brief removes component to component list if it dosnt already exist
 	 */
-	void RemoveComponent(Component& component);
+	template<typename T>
+	void RemoveComponent(void) {
+		if(!HasComponents<T> || T::TypeID <= 0)//0 is Transform. Transform cand be Removed
+			return;
+
+		this->components[T::TypeID].OnDestroy();
+		this->components[T::TypeID] = nullptr;
+	}
 
 	/*!
 	 * @brief sets this.perant to parent and disataches from old and ataches to new parents children
@@ -49,6 +63,16 @@ public:
 	 */
 	const std::list<Entity*>& GetChildren(void);
 
+	template <typename T>
+	T* GetComponent(void) {
+		return reinterpret_cast<T*>(this->components[T::TypeID]);
+	}
+
+	template<typename T>
+	bool HasComponents(void) {
+		return this->components[T::TypeID] != nullptr;
+	}
+
 	std::string name;
 
 protected:
@@ -69,8 +93,6 @@ protected:
 	void Destroy(void);
 
 private:
-
-	bool HasComponents(Component & comToCheck);
 
 	u64 entityID = 0;
 	Entity* parent = nullptr;
