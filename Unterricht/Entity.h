@@ -3,6 +3,7 @@
 //===== ===== Extern ===== =====
 #include <list>
 #include <string>
+#include <cassert>
 
 //===== ===== Intern ===== =====
 #include "Types.h"
@@ -24,6 +25,8 @@ public:
 	 */
 	template<typename T>
 	void AddComponent(void) {
+		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
+
 		if(isVirtual && T::TypeID <= 0)//0 is Transform
 			return;
 
@@ -36,6 +39,8 @@ public:
 	 */
 	template<typename T>
 	void RemoveComponent(void) {
+		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
+
 		if(!HasComponents<T> || T::TypeID <= 0)//0 is Transform. Transform cand be Removed
 			return;
 
@@ -70,6 +75,8 @@ public:
 
 	template<typename T>
 	bool HasComponents(void) {
+		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
+
 		return this->components[T::TypeID] != nullptr;
 	}
 
