@@ -9,9 +9,9 @@ class Component {
 	friend Entity;
 
 public:
-	void OnCreate(void) {};
-	void OnUpdate(float deltaTime) {};
-	void OnDestroy(void) {};
+	virtual void OnCreate(void) {};
+	virtual void OnUpdate(float deltaTime) {};
+	virtual void OnDestroy(void) {};
 
 protected:
 
