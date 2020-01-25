@@ -17,7 +17,7 @@ class Entity final
 
 public:
 
-	Entity(bool hasTransform = true);
+	Entity(Entity* parent = nullptr);
 
 	/*!
 	 * @brief adds component to component list if it dosnt already exist

@@ -3,14 +3,18 @@
 
 #include "Component.h"
 #include "Transform.h"
+#include "GameInstance.h"
 
 u64 Entity::ActiveEntities = 0;
 
-Entity::Entity(bool hasTransform/* = true*/) : entityID(++ActiveEntities)
+Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 {
-	isVirtual = !hasTransform;
-	if(hasTransform) {
+	isVirtual = nullptr == parent;
+	if(isVirtual) {
 		AddComponent(*(Component*)(new Transform));
+		AttachTo(parent);
+	} else {
+		GameInstance::GetInstance().Add(this);
 	}
 }
 
