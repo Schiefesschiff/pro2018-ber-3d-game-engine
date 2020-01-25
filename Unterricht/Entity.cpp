@@ -10,18 +10,21 @@ Entity::Entity(bool hasTransform/* = true*/) : entityID(++ActiveEntities)
 {
 	isVirtual = !hasTransform;
 	if(hasTransform) {
-		components.push_back((Component*)new Transform);
+		AddComponent(*(Component*)(new Transform));
 	}
 }
 
-void Entity::AddComponent(Component* component)
+void Entity::AddComponent(Component& component)
 {
-	this->components.push_back(component);
+	this->components.push_back(&component);
+	component.OnCreate();
 }
 
-void Entity::RemoveComponent(Component* component)
+void Entity::RemoveComponent(Component& component)
 {
-	this->components.remove_if(component);
+
+	component.OnDestroy();
+	this->components.remove_if(&component);
 }
 
 bool Entity::AttachTo(Entity* parent)
@@ -29,7 +32,7 @@ bool Entity::AttachTo(Entity* parent)
 	if (!parent)
 		return false;
 
-	if (this->entityID != parent->entityID) //&& check if parent is a child of this entity
+	if(this->entityID != parent->entityID) //&& check if parent is a child of this entity
 	{
 		this->Detatch();
 		this->parent = parent;
@@ -91,4 +94,13 @@ void Entity::Destroy(void) {
 	for(auto& it : children)
 		it->Destroy();
 	this->children.clear();
+}
+
+bool inline Entity::HasComponents(Component& comToCheck) {
+	for(auto& it : this->components) {
+		if(it == &comToCheck)
+			return true;
+	}
+
+	return false;
 }

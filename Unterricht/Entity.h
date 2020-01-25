@@ -22,12 +22,12 @@ public:
 	/*!
 	 * @brief adds component to component list if it dosnt already exist
 	 */
-	void AddComponent(Component* component);
+	void AddComponent(Component& component);
 
 	/*!
 	 * @brief removes component to component list if it dosnt already exist
 	 */
-	void RemoveComponent(Component* component);
+	void RemoveComponent(Component& component);
 
 	/*!
 	 * @brief sets this.perant to parent and disataches from old and ataches to new parents children
@@ -69,6 +69,8 @@ protected:
 	void Destroy(void);
 
 private:
+
+	bool HasComponents(Component & comToCheck);
 
 	u64 entityID = 0;
 	Entity* parent = nullptr;
