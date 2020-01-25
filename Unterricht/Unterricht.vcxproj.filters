@@ -25,6 +25,9 @@
     <Filter Include="Headerdateien\Engine">
       <UniqueIdentifier>{7843ada7-12c5-4c12-ab46-a9b9889e0100}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Components">
+      <UniqueIdentifier>{a1bd4a60-058e-41f5-a3ac-be59a67efeb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp">
@@ -90,7 +93,10 @@
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Headerdateien\Engine</Filter>
+      <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Headerdateien\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
