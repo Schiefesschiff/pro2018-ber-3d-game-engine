@@ -13,6 +13,7 @@ class Component;
 class Entity final
 {
 	friend class Scene;
+	friend class GameInstance;
 
 	static u64 ActiveEntities;
 

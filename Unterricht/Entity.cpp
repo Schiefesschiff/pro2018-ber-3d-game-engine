@@ -12,7 +12,7 @@ Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 	isVirtual = nullptr == parent;
 
 	if(isVirtual) {
-		GameInstance::GetInstance().Add(this);
+		GameInstance::GetInstance().Add(*this);
 	} else {
 		AddComponent<Transform>();
 		AttachTo(parent);

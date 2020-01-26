@@ -13,6 +13,9 @@ class GameInstance final {
 	GE_DECLARE_SINGLETON(GameInstance);
 
 public:
+
+	void InitGame(void);
+
 	/*!
 	 * @brief unload old scene, change currentScene to newScene, load new scene
 	 */
@@ -21,18 +24,22 @@ public:
 	/*!
 	 * @brief adds the virtualEntity to the virtualEntities array
 	 */
-	void Add(Entity* virtualEntity);
+	void Add(Entity& virtualEntity);
 
 	/*!
 	 * @brief removes the virtualEntity to the virtualEntities array
 	 */
-	void Remove(Entity* virtualEntity);
+	void Remove(Entity& virtualEntity);
 
 	/*!
 	 * @brief			updates the current scene and all virtual Entities
 	 * @param deltaTime	the time between last frame and current frame in seconds
 	 */
 	void UpdateCurrentScene(float deltaTime);
+
+	void RenderCurrentScene(class Window& target);
+
+	void Shutdown(void);
 
 private:
 
