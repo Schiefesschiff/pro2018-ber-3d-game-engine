@@ -11,19 +11,17 @@ Entity::Entity(Entity* parent/* = nullptr*/) : entityID(++ActiveEntities)
 {
 	isVirtual = nullptr == parent;
 
-	components.resize(MAX_COMPONENTS);
-
 	if(isVirtual) {
+		GameInstance::GetInstance().Add(this);
+	} else {
 		AddComponent<Transform>();
 		AttachTo(parent);
-	} else {
-		GameInstance::GetInstance().Add(this);
 	}
 }
 
 bool Entity::AttachTo(Entity* parent)
 {
-	if (!parent || isVirtual)
+	if (isVirtual)
 		return false;
 
 	if(this->entityID != parent->entityID) //&& check if parent is a child of this entity
@@ -66,13 +64,21 @@ const std::list<Entity*>& Entity::GetChildren()
 }
 
 void Entity::Create(void) {
-	for(auto& it : components)
+	for(auto& it : components) {
+		if(nullptr == it)
+			continue;
+
 		it->OnCreate();
+	}
 }
 
 void Entity::Update(float deltaTime) {
-	for(auto& it : components)
+	for(auto& it : components) {
+		if(nullptr == it)
+			continue;
+
 		it->OnUpdate(deltaTime);
+	}
 
 	for(auto& it : children)
 		it->Update(deltaTime);
@@ -81,8 +87,13 @@ void Entity::Update(float deltaTime) {
 void Entity::Destroy(void) {
 	Detatch();
 
-	for(auto& it : components)
+	for(auto& it : components) {
+		if(nullptr == it)
+			continue;
+
 		it->OnDestroy();
+		delete(it);//TODO: change to save delete makro
+	}
 	this->components.clear();
 
 	for(auto& it : children)

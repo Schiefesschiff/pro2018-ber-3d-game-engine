@@ -25,10 +25,17 @@ public:
 	 */
 	template<typename T>
 	void AddComponent(void) {
-		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
+		if(T::TypeID == INVALID_COMPONENT_ID)
+			Component::RegisterComponentType<T>();
 
 		if(isVirtual && T::TypeID <= 0)//0 is Transform
 			return;
+
+		else  if(HasComponents<T>())
+			return;
+
+		if(T::TypeID >= components.size())
+			components.resize(T::TypeID + 1);
 
 		components[T::TypeID] = new T;
 		components[T::TypeID].OnCreate();
@@ -39,12 +46,11 @@ public:
 	 */
 	template<typename T>
 	void RemoveComponent(void) {
-		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
-
-		if(!HasComponents<T> || T::TypeID <= 0)//0 is Transform. Transform cand be Removed
+		if(!HasComponents<T>() || T::TypeID <= 0)//0 is Transform. Transform cand be Removed
 			return;
 
 		this->components[T::TypeID].OnDestroy();
+		delete(this->components[T::TypeID]);//TODO: change to save delete makro
 		this->components[T::TypeID] = nullptr;
 	}
 
@@ -75,7 +81,8 @@ public:
 
 	template<typename T>
 	bool HasComponents(void) {
-		assert(T::TypeID < MAX_COMPONENTS && T::TypeID >= 0);
+		if(T::TypeID < 0 || T::TypeID >= components.size())
+			return false;
 
 		return this->components[T::TypeID] != nullptr;
 	}
