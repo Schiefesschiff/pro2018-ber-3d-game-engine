@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include "Clock.h"
 #include "Entity.h"
+#include "GameInstance.h"
 
 GE_DEFINE_SINGLETON(Application);
 
@@ -19,19 +20,13 @@ void Application::Initialize()
 
 	this->win = new Window();
 	this->win->Initialize("Game Engine Test");
+
+	game = GameInstance::GetInstancePtr();
+	game->InitGame();
 }
 
 void Application::Run(void)
 {
-	Entity world;
-	Entity box;
-
-	world.name = "World";
-	box.name = "Box";
-
-	if (!box.AttachTo(&world))
-		printf("Failed to attach box to world!");
-
 	this->meAppState = ApplicationState::Running;
 
 	while (this->meAppState == ApplicationState::Running)
@@ -42,26 +37,15 @@ void Application::Run(void)
 		auto elapsedTime = static_cast<real>(Clock::GetInstance().GetElapsedTime()) / 1000.0f;
 	
 		// Update Game
-		world.Update(elapsedTime);
-
-
-		std::function<void(Entity*)> sceneUpdate = [&sceneUpdate, &elapsedTime](Entity* entity)
-		{
-			for (auto& child : entity->GetChildren())
-			{
-				child->Update(elapsedTime);
-				sceneUpdate(entity);
-			}
-		};
+		game->UpdateCurrentScene(elapsedTime);
 
 		// Render Frame
-
-		Sleep(100);
-		//printf("Elapsed time: %lld ms\n", Clock::GetInstance().GetElapsedTime());
+		game->RenderCurrentScene(*win);
 	}
 }
 
 void Application::Shutdown()
 {
+	game->Shutdown();
 	SAFE_DELETE(this->win);
 }

@@ -25,4 +25,6 @@ private:
 	bool bShutdown = false;
 	class Window* win = nullptr;
 	ApplicationState meAppState = ApplicationState::Stopped;
+
+	class GameInstance* game = nullptr;
 };
