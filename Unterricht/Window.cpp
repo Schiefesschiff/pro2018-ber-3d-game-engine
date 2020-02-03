@@ -29,6 +29,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void Window::Initialize(const char* title, int width, int height)
 {
+	wWidth = width;
+	wHeight = height;
+
 	WNDCLASSEXA wc = { };
 	wc.cbSize = sizeof(wc);
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;

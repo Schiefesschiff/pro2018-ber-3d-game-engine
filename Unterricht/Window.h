@@ -16,9 +16,14 @@ public:
 	void Show(bool show);
 	bool PumpMessages();
 
+	inline int GetWidth(void) const { return this->wWidth; };
+	inline int GetHeight(void) const { return this->wHeight; };
+	inline HWND GetHandle(void) const { return this->windowHandle; };
+
 private:
 
 	HWND windowHandle;
 	LPCSTR className;
-
+	int wWidth;
+	int wHeight;
 };
