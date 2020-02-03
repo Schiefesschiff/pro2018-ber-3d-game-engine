@@ -16,13 +16,15 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		default:
-			return DefWindowProcA(
-				hWnd,
-				uMsg,
-				wParam,
-				lParam
-			);
+			break;
 	}
+
+	return DefWindowProcA(
+		hWnd,
+		uMsg,
+		wParam,
+		lParam
+	);
 }
 
 void Window::Initialize(const char* title, int width, int height)
