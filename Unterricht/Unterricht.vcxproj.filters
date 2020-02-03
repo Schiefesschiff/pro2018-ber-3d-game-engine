@@ -28,6 +28,9 @@
     <Filter Include="Headerdateien\Components">
       <UniqueIdentifier>{a1bd4a60-058e-41f5-a3ac-be59a67efeb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Components">
+      <UniqueIdentifier>{71f77f7d-f4b7-47a8-b77c-9bcab2389010}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp">
@@ -56,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Quelldateien\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Quelldateien\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

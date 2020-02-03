@@ -3,18 +3,20 @@
 //===== ===== Extern ===== =====
 //===== ===== Intern ===== =====
 
-#define INVALID_COMPONENT_ID -1;
+#define INVALID_COMPONENT_ID -1
 
 class Entity;
+class Transform;
 
 static int ComponentCount = 0;//0 is Reserved for Transform
 
 class Component {
 	friend Entity;
+	friend Transform;
 
 public:
 	template <typename T>
-	void RegisterComponentType() {
+	static void RegisterComponentType(void) {
 		ComponentCount++;
 
 		if(T::TypeID == INVALID_COMPONENT_ID)
@@ -31,6 +33,6 @@ protected:
 	Entity* GetDad(void) { return dad; };
 
 private:
-	static const int TypeID = INVALID_COMPONENT_ID;
+	static int TypeID;
 	Entity* dad;
 };

@@ -58,7 +58,7 @@ Entity* Entity::FindChildEntity(Entity* parent) {
 
 }
 
-const std::list<Entity*>& Entity::GetChildren()
+const std::list<Entity*> Entity::GetChildren()
 {
 	return this->children;
 }

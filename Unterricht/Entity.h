@@ -1,14 +1,14 @@
 #pragma once
 
 //===== ===== Extern ===== =====
+#include <vector>
 #include <list>
 #include <string>
 #include <cassert>
 
 //===== ===== Intern ===== =====
 #include "Types.h"
-
-class Component;
+#include "Component.h"
 
 class Entity final
 {
@@ -39,7 +39,7 @@ public:
 			components.resize(T::TypeID + 1);
 
 		components[T::TypeID] = new T;
-		components[T::TypeID].OnCreate();
+		components[T::TypeID]->OnCreate();
 	}
 
 	/*!
@@ -70,10 +70,10 @@ public:
 	 */
 	Entity* FindChildEntity(Entity* parent);
 
-	/*!
+	/*!TypeID
 	 * @return chlidens list
 	 */
-	const std::list<Entity*>& GetChildren(void);
+	const std::list<Entity*> GetChildren(void);
 
 	template <typename T>
 	T* GetComponent(void) {
@@ -112,6 +112,6 @@ private:
 	u64 entityID = 0;
 	Entity* parent = nullptr;
 	std::list<Entity*> children;
-	std::list<Component*> components;
+	std::vector<Component*> components;
 	bool isVirtual;
 };
